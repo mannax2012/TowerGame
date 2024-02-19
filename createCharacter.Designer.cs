@@ -49,6 +49,7 @@
             this.characterHEALTH = new System.Windows.Forms.Label();
             this.characterMAGIC = new System.Windows.Forms.Label();
             this.characterEXP = new System.Windows.Forms.Label();
+            this.CancelBTN = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBoxClassSelect
@@ -238,11 +239,22 @@
             this.characterEXP.TabIndex = 20;
             this.characterEXP.Text = "0";
             // 
+            // CancelBTN
+            // 
+            this.CancelBTN.Location = new System.Drawing.Point(281, 194);
+            this.CancelBTN.Name = "CancelBTN";
+            this.CancelBTN.Size = new System.Drawing.Size(75, 23);
+            this.CancelBTN.TabIndex = 21;
+            this.CancelBTN.Text = "Cancel";
+            this.CancelBTN.UseVisualStyleBackColor = true;
+            this.CancelBTN.Click += new System.EventHandler(this.CancelBTN_Click);
+            // 
             // createCharacter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 229);
+            this.Controls.Add(this.CancelBTN);
             this.Controls.Add(this.characterEXP);
             this.Controls.Add(this.characterMAGIC);
             this.Controls.Add(this.characterHEALTH);
@@ -294,5 +306,6 @@
         private System.Windows.Forms.Label characterHEALTH;
         private System.Windows.Forms.Label characterMAGIC;
         private System.Windows.Forms.Label characterEXP;
+        private System.Windows.Forms.Button CancelBTN;
     }
 }

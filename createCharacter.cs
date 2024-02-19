@@ -205,8 +205,8 @@ namespace TowerGame
                         return; // User chose not to overwrite
                     }
 
-                    // If user confirms, delete the existing entry
-                    DeleteCharacter(playerName);
+                    characterDataManagement cDM = new characterDataManagement();
+                    cDM.deleteCharacter(playerName);
                 }
                 // Insert or update the character
                 string insertQuery = "INSERT INTO Characters (Name, ClassName, Level, Health, Magic, Strength, Dexterity, Intellect, Stamina, CurrentEXP, EXPMAX) VALUES (@Name, @ClassName, @Level, @Health, @Magic, @Strength, @Dexterity, @Intellect, @Stamina, @CurrentEXP, @EXPMAX)";
@@ -245,6 +245,13 @@ namespace TowerGame
                 deleteCommand.Parameters.AddWithValue("@Name", playerName);
                 deleteCommand.ExecuteNonQuery();
             }
+        }
+
+        private void CancelBTN_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            mainMenu main = new mainMenu();
+            main.Show();
         }
     }
     public class loadClassData

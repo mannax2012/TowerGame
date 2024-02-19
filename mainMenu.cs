@@ -33,7 +33,7 @@ namespace TowerGame
         {
             characterName.Text = character.Name;
             CharacterLevel.Text = character.Level.ToString();
-            //characterClass.Text = character.ClassName;
+            characterClass.Text = character.pClassName;
 
         }
         private void newCharacterToolStripMenuItem2_Click(object sender, EventArgs e)
