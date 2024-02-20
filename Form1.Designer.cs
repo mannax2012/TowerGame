@@ -1,4 +1,4 @@
-﻿namespace TowerGame
+﻿/*namespace TowerGame
 {
         partial class Form1
         {
@@ -116,3 +116,4 @@
     }
 
 
+*/

@@ -60,7 +60,6 @@
             this.btnAddCharacter.TabIndex = 3;
             this.btnAddCharacter.Text = "Add Character";
             this.btnAddCharacter.UseVisualStyleBackColor = true;
-            this.btnAddCharacter.Click += new System.EventHandler(this.btnAddCharacter_Click);
             // 
             // btnLoad
             // 

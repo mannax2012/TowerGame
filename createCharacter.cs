@@ -19,14 +19,13 @@ namespace TowerGame
         public string connectionString = @"Data Source=Classes.db;Version=3;";
         public loadClassData selectedClass;
         DataTable dtClasses;
-        public newCharacterData newCharacter;
         public createCharacter()
         {
             InitializeComponent();
             InitializeClassDatabase();
             LoadClassesIntoComboBox();
-            loadCharacter loadCharacter = new loadCharacter();
-            loadCharacter.InitializeDatabase();
+            DatabaseManagement database = new DatabaseManagement();
+            database.InitializeDatabase();
             comboBoxClassSelect.SelectedIndex = 0;
             comboBoxClassSelect.SelectedIndexChanged += comboBoxClassSelect_SelectedIndexChanged;
         }
@@ -144,11 +143,19 @@ namespace TowerGame
                 int selectedClassINTEL = Convert.ToInt32(rows[0]["INTEL"]);
                 int selectedClassSTAM = Convert.ToInt32(rows[0]["STAM"]);
 
+                int pStrength = selectedClassSTR + 10;
+                int pDexterity = selectedClassDEX + 10;
+                int pIntellect = selectedClassINTEL + 10;
+                int pStamina = selectedClassSTAM + 10;
+                int pHealth = 100 + ((pStamina + pStrength) * 10);
+                int pMagic = 100 + ((pStamina + pIntellect) * 10);
 
-                characterSTR.Text = selectedClassSTR.ToString();
-                characterDEX.Text = selectedClassDEX.ToString();
-                characterINTEL.Text = selectedClassINTEL.ToString();
-                characterSTAM.Text = selectedClassSTAM.ToString();
+                characterHEALTHVal.Text = pHealth.ToString();
+                characterMAGICVal.Text = pMagic.ToString();
+                characterSTR.Text = pStrength.ToString();
+                characterDEX.Text = pDexterity.ToString();
+                characterINTEL.Text = pIntellect.ToString();
+                characterSTAM.Text = pStamina.ToString();
             }
         }
         private void button1_Click(object sender, EventArgs e)
@@ -162,24 +169,26 @@ namespace TowerGame
             {
                 string playerName = characterNameEntry.Text;
                 string playerClass = comboBoxClassSelect.SelectedItem.ToString();
-                int pLevel = playerLevelLabel.Text.Length;
-                int pStrength = characterSTR.Text.Length;
-                int pDexterity = characterDEX.Text.Length;
-                int pIntellect = characterINTEL.Text.Length;
-                int pStamina = characterSTAM.Text.Length;
-                int pHealth = characterHEALTH.Text.Length;
-                int pMagic = characterMAGIC.Text.Length;
-                int pExP = characterEXP.Text.Length;
+                int pLevel = int.Parse(playerLevelLabel.Text);
+                int pStrength = int.Parse(characterSTR.Text);
+                int pDexterity = int.Parse(characterDEX.Text);
+                int pIntellect = int.Parse(characterINTEL.Text);
+                int pStamina = int.Parse(characterSTAM.Text);
+                int pHealth = int.Parse(characterHEALTHVal.Text);
+                int pHealthMax = pHealth;
+                int pMagic = int.Parse(characterMAGICVal.Text);
+                int pMagicMax = pMagic;
+                int pExP = int.Parse(characterEXP.Text);
                 int pExPMAX = pLevel * 1000;
-                createNewCharacter(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pMagic, pExP, pExPMAX);
-                
+                createNewCharacter(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
+                characterDataManagement character = new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
                 mainMenu main = new mainMenu();
-                main.updateCharacterDataNEW(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pMagic, pExP, pExPMAX);
+                main.updateCharacterData(character);
                 main.Show();
                 this.Close();
               }
         }
-        private void createNewCharacter(string playerName, string playerClass, int pLevel, int pStrength, int pDexterity, int pIntellect, int pStamina, int pHealth, int pMagic, int pExP, int pExPMAX)
+        private void createNewCharacter(string playerName, string playerClass, int pLevel, int pStrength, int pDexterity, int pIntellect, int pStamina, int pHealth, int pHealthMax, int pMagic, int pMagicMax, int pExP, int pExPMAX)
         {
             // Check if the database file exists
             if (!File.Exists("Characters.db"))
@@ -205,17 +214,19 @@ namespace TowerGame
                         return; // User chose not to overwrite
                     }
 
-                    characterDataManagement cDM = new characterDataManagement();
-                    cDM.deleteCharacter(playerName);
+                    DatabaseManagement Database = new DatabaseManagement();
+                    Database.deleteCharacter(playerName);
                 }
                 // Insert or update the character
-                string insertQuery = "INSERT INTO Characters (Name, ClassName, Level, Health, Magic, Strength, Dexterity, Intellect, Stamina, CurrentEXP, EXPMAX) VALUES (@Name, @ClassName, @Level, @Health, @Magic, @Strength, @Dexterity, @Intellect, @Stamina, @CurrentEXP, @EXPMAX)";
+                string insertQuery = "INSERT INTO Characters (Name, ClassName, Level, Health, HealthMax, Magic, MagicMax, Strength, Dexterity, Intellect, Stamina, CurrentEXP, EXPMAX) VALUES (@Name, @ClassName, @Level, @Health, @HealthMax, @Magic, @MagicMax, @Strength, @Dexterity, @Intellect, @Stamina, @CurrentEXP, @EXPMAX)";
                 SQLiteCommand insertCommand = new SQLiteCommand(insertQuery, connection);
                 insertCommand.Parameters.AddWithValue("@Name", playerName);
                 insertCommand.Parameters.AddWithValue("@ClassName", playerClass);
                 insertCommand.Parameters.AddWithValue("@Level", pLevel);
                 insertCommand.Parameters.AddWithValue("@Health", pHealth);
+                insertCommand.Parameters.AddWithValue("@HealthMax", pHealthMax);
                 insertCommand.Parameters.AddWithValue("@Magic", pMagic);
+                insertCommand.Parameters.AddWithValue("@MagicMax", pMagicMax);
                 insertCommand.Parameters.AddWithValue("@Strength", pStrength);
                 insertCommand.Parameters.AddWithValue("@Dexterity", pDexterity);
                 insertCommand.Parameters.AddWithValue("@Intellect", pIntellect);
@@ -254,6 +265,7 @@ namespace TowerGame
             main.Show();
         }
     }
+
     public class loadClassData
     {
         public string ClassName { get; set; }
@@ -270,19 +282,6 @@ namespace TowerGame
             bonusDEX = dex;
             bonusINTEL = intel;
             bonusSTAM = stam;
-        }
-    }
-    public class newCharacterData
-    {
-        public string Name { get; set; }
-        public string className { get; set; }
-        public int Level { get; set; }
-
-        public newCharacterData(string playerName, string playerClass, int pLevel, int pStrength, int pDexterity, int pIntellect, int pStamina, int pHealth, int pMagic, int pExP, int pExPMAX)
-        {
-            Name = playerName;
-            Level = pLevel;
-            className = playerClass;
         }
     }
 }

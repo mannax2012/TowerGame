@@ -46,8 +46,8 @@
             this.characterDEX = new System.Windows.Forms.Label();
             this.characterINTEL = new System.Windows.Forms.Label();
             this.characterSTAM = new System.Windows.Forms.Label();
-            this.characterHEALTH = new System.Windows.Forms.Label();
-            this.characterMAGIC = new System.Windows.Forms.Label();
+            this.characterHEALTHVal = new System.Windows.Forms.Label();
+            this.characterMAGICVal = new System.Windows.Forms.Label();
             this.characterEXP = new System.Windows.Forms.Label();
             this.CancelBTN = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -97,7 +97,7 @@
             // playerLevelLabel
             // 
             this.playerLevelLabel.AutoSize = true;
-            this.playerLevelLabel.Location = new System.Drawing.Point(302, 61);
+            this.playerLevelLabel.Location = new System.Drawing.Point(330, 61);
             this.playerLevelLabel.Name = "playerLevelLabel";
             this.playerLevelLabel.Size = new System.Drawing.Size(13, 13);
             this.playerLevelLabel.TabIndex = 5;
@@ -179,56 +179,56 @@
             // characterSTR
             // 
             this.characterSTR.AutoSize = true;
-            this.characterSTR.Location = new System.Drawing.Point(72, 112);
+            this.characterSTR.Location = new System.Drawing.Point(109, 112);
             this.characterSTR.Name = "characterSTR";
-            this.characterSTR.Size = new System.Drawing.Size(13, 13);
+            this.characterSTR.Size = new System.Drawing.Size(19, 13);
             this.characterSTR.TabIndex = 14;
-            this.characterSTR.Text = "0";
+            this.characterSTR.Text = "10";
             // 
             // characterDEX
             // 
             this.characterDEX.AutoSize = true;
-            this.characterDEX.Location = new System.Drawing.Point(72, 139);
+            this.characterDEX.Location = new System.Drawing.Point(109, 139);
             this.characterDEX.Name = "characterDEX";
-            this.characterDEX.Size = new System.Drawing.Size(13, 13);
+            this.characterDEX.Size = new System.Drawing.Size(19, 13);
             this.characterDEX.TabIndex = 15;
-            this.characterDEX.Text = "0";
+            this.characterDEX.Text = "10";
             // 
             // characterINTEL
             // 
             this.characterINTEL.AutoSize = true;
-            this.characterINTEL.Location = new System.Drawing.Point(72, 164);
+            this.characterINTEL.Location = new System.Drawing.Point(109, 164);
             this.characterINTEL.Name = "characterINTEL";
-            this.characterINTEL.Size = new System.Drawing.Size(13, 13);
+            this.characterINTEL.Size = new System.Drawing.Size(19, 13);
             this.characterINTEL.TabIndex = 16;
-            this.characterINTEL.Text = "0";
+            this.characterINTEL.Text = "10";
             // 
             // characterSTAM
             // 
             this.characterSTAM.AutoSize = true;
-            this.characterSTAM.Location = new System.Drawing.Point(72, 189);
+            this.characterSTAM.Location = new System.Drawing.Point(109, 189);
             this.characterSTAM.Name = "characterSTAM";
-            this.characterSTAM.Size = new System.Drawing.Size(13, 13);
+            this.characterSTAM.Size = new System.Drawing.Size(19, 13);
             this.characterSTAM.TabIndex = 17;
-            this.characterSTAM.Text = "0";
+            this.characterSTAM.Text = "10";
             // 
-            // characterHEALTH
+            // characterHEALTHVal
             // 
-            this.characterHEALTH.AutoSize = true;
-            this.characterHEALTH.Location = new System.Drawing.Point(103, 61);
-            this.characterHEALTH.Name = "characterHEALTH";
-            this.characterHEALTH.Size = new System.Drawing.Size(13, 13);
-            this.characterHEALTH.TabIndex = 18;
-            this.characterHEALTH.Text = "0";
+            this.characterHEALTHVal.AutoSize = true;
+            this.characterHEALTHVal.Location = new System.Drawing.Point(103, 61);
+            this.characterHEALTHVal.Name = "characterHEALTHVal";
+            this.characterHEALTHVal.Size = new System.Drawing.Size(13, 13);
+            this.characterHEALTHVal.TabIndex = 18;
+            this.characterHEALTHVal.Text = "0";
             // 
-            // characterMAGIC
+            // characterMAGICVal
             // 
-            this.characterMAGIC.AutoSize = true;
-            this.characterMAGIC.Location = new System.Drawing.Point(103, 87);
-            this.characterMAGIC.Name = "characterMAGIC";
-            this.characterMAGIC.Size = new System.Drawing.Size(13, 13);
-            this.characterMAGIC.TabIndex = 19;
-            this.characterMAGIC.Text = "0";
+            this.characterMAGICVal.AutoSize = true;
+            this.characterMAGICVal.Location = new System.Drawing.Point(103, 87);
+            this.characterMAGICVal.Name = "characterMAGICVal";
+            this.characterMAGICVal.Size = new System.Drawing.Size(13, 13);
+            this.characterMAGICVal.TabIndex = 19;
+            this.characterMAGICVal.Text = "0";
             // 
             // characterEXP
             // 
@@ -256,8 +256,8 @@
             this.ClientSize = new System.Drawing.Size(466, 229);
             this.Controls.Add(this.CancelBTN);
             this.Controls.Add(this.characterEXP);
-            this.Controls.Add(this.characterMAGIC);
-            this.Controls.Add(this.characterHEALTH);
+            this.Controls.Add(this.characterMAGICVal);
+            this.Controls.Add(this.characterHEALTHVal);
             this.Controls.Add(this.characterSTAM);
             this.Controls.Add(this.characterINTEL);
             this.Controls.Add(this.characterDEX);
@@ -303,8 +303,8 @@
         private System.Windows.Forms.Label characterDEX;
         private System.Windows.Forms.Label characterINTEL;
         private System.Windows.Forms.Label characterSTAM;
-        private System.Windows.Forms.Label characterHEALTH;
-        private System.Windows.Forms.Label characterMAGIC;
+        private System.Windows.Forms.Label characterHEALTHVal;
+        private System.Windows.Forms.Label characterMAGICVal;
         private System.Windows.Forms.Label characterEXP;
         private System.Windows.Forms.Button CancelBTN;
     }
