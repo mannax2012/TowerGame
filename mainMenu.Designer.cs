@@ -60,6 +60,11 @@
             this.progressBarEXP = new System.Windows.Forms.ProgressBar();
             this.mindBarPictureBox = new System.Windows.Forms.PictureBox();
             this.healthBarPictureBox = new System.Windows.Forms.PictureBox();
+            this.expBTN = new System.Windows.Forms.Button();
+            this.characterEXPMAX = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.characterHEALTHMax = new System.Windows.Forms.Label();
+            this.characterMAGICMax = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mindBarPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.healthBarPictureBox)).BeginInit();
@@ -137,32 +142,32 @@
             this.characterEXP.AutoSize = true;
             this.characterEXP.Location = new System.Drawing.Point(295, 180);
             this.characterEXP.Name = "characterEXP";
-            this.characterEXP.Size = new System.Drawing.Size(30, 13);
+            this.characterEXP.Size = new System.Drawing.Size(13, 13);
             this.characterEXP.TabIndex = 40;
-            this.characterEXP.Text = "0 / 0";
+            this.characterEXP.Text = "0";
             // 
             // characterMAGIC
             // 
             this.characterMAGIC.AutoSize = true;
-            this.characterMAGIC.Location = new System.Drawing.Point(90, 180);
+            this.characterMAGIC.Location = new System.Drawing.Point(108, 180);
             this.characterMAGIC.Name = "characterMAGIC";
-            this.characterMAGIC.Size = new System.Drawing.Size(30, 13);
+            this.characterMAGIC.Size = new System.Drawing.Size(13, 13);
             this.characterMAGIC.TabIndex = 39;
-            this.characterMAGIC.Text = "0 / 0";
+            this.characterMAGIC.Text = "0";
             // 
             // characterHEALTH
             // 
             this.characterHEALTH.AutoSize = true;
             this.characterHEALTH.Location = new System.Drawing.Point(108, 154);
             this.characterHEALTH.Name = "characterHEALTH";
-            this.characterHEALTH.Size = new System.Drawing.Size(30, 13);
+            this.characterHEALTH.Size = new System.Drawing.Size(13, 13);
             this.characterHEALTH.TabIndex = 38;
-            this.characterHEALTH.Text = "0 / 0";
+            this.characterHEALTH.Text = "0";
             // 
             // characterSTAM
             // 
             this.characterSTAM.AutoSize = true;
-            this.characterSTAM.Location = new System.Drawing.Point(71, 282);
+            this.characterSTAM.Location = new System.Drawing.Point(108, 283);
             this.characterSTAM.Name = "characterSTAM";
             this.characterSTAM.Size = new System.Drawing.Size(13, 13);
             this.characterSTAM.TabIndex = 37;
@@ -171,7 +176,7 @@
             // characterINTEL
             // 
             this.characterINTEL.AutoSize = true;
-            this.characterINTEL.Location = new System.Drawing.Point(71, 257);
+            this.characterINTEL.Location = new System.Drawing.Point(108, 258);
             this.characterINTEL.Name = "characterINTEL";
             this.characterINTEL.Size = new System.Drawing.Size(13, 13);
             this.characterINTEL.TabIndex = 36;
@@ -180,7 +185,7 @@
             // characterDEX
             // 
             this.characterDEX.AutoSize = true;
-            this.characterDEX.Location = new System.Drawing.Point(71, 232);
+            this.characterDEX.Location = new System.Drawing.Point(108, 233);
             this.characterDEX.Name = "characterDEX";
             this.characterDEX.Size = new System.Drawing.Size(13, 13);
             this.characterDEX.TabIndex = 35;
@@ -189,7 +194,7 @@
             // characterSTR
             // 
             this.characterSTR.AutoSize = true;
-            this.characterSTR.Location = new System.Drawing.Point(71, 205);
+            this.characterSTR.Location = new System.Drawing.Point(108, 206);
             this.characterSTR.Name = "characterSTR";
             this.characterSTR.Size = new System.Drawing.Size(13, 13);
             this.characterSTR.TabIndex = 34;
@@ -332,11 +337,62 @@
             this.healthBarPictureBox.TabIndex = 56;
             this.healthBarPictureBox.TabStop = false;
             // 
+            // expBTN
+            // 
+            this.expBTN.Location = new System.Drawing.Point(224, 222);
+            this.expBTN.Name = "expBTN";
+            this.expBTN.Size = new System.Drawing.Size(75, 23);
+            this.expBTN.TabIndex = 57;
+            this.expBTN.Text = "ADD EXP";
+            this.expBTN.UseVisualStyleBackColor = true;
+            this.expBTN.Click += new System.EventHandler(this.expBTN_Click);
+            // 
+            // characterEXPMAX
+            // 
+            this.characterEXPMAX.AutoSize = true;
+            this.characterEXPMAX.Location = new System.Drawing.Point(295, 206);
+            this.characterEXPMAX.Name = "characterEXPMAX";
+            this.characterEXPMAX.Size = new System.Drawing.Size(13, 13);
+            this.characterEXPMAX.TabIndex = 58;
+            this.characterEXPMAX.Text = "0";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(209, 205);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(61, 13);
+            this.label12.TabIndex = 59;
+            this.label12.Text = "Next Level:";
+            // 
+            // characterHEALTHMax
+            // 
+            this.characterHEALTHMax.AutoSize = true;
+            this.characterHEALTHMax.Location = new System.Drawing.Point(162, 154);
+            this.characterHEALTHMax.Name = "characterHEALTHMax";
+            this.characterHEALTHMax.Size = new System.Drawing.Size(13, 13);
+            this.characterHEALTHMax.TabIndex = 60;
+            this.characterHEALTHMax.Text = "0";
+            // 
+            // characterMAGICMax
+            // 
+            this.characterMAGICMax.AutoSize = true;
+            this.characterMAGICMax.Location = new System.Drawing.Point(162, 180);
+            this.characterMAGICMax.Name = "characterMAGICMax";
+            this.characterMAGICMax.Size = new System.Drawing.Size(13, 13);
+            this.characterMAGICMax.TabIndex = 61;
+            this.characterMAGICMax.Text = "0";
+            // 
             // mainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.characterMAGICMax);
+            this.Controls.Add(this.characterHEALTHMax);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.characterEXPMAX);
+            this.Controls.Add(this.expBTN);
             this.Controls.Add(this.healthBarPictureBox);
             this.Controls.Add(this.mindBarPictureBox);
             this.Controls.Add(this.progressBarEXP);
@@ -410,5 +466,10 @@
         public System.Windows.Forms.Label characterHEALTH;
         private System.Windows.Forms.PictureBox mindBarPictureBox;
         private System.Windows.Forms.PictureBox healthBarPictureBox;
+        private System.Windows.Forms.Button expBTN;
+        private System.Windows.Forms.Label characterEXPMAX;
+        private System.Windows.Forms.Label label12;
+        public System.Windows.Forms.Label characterHEALTHMax;
+        public System.Windows.Forms.Label characterMAGICMax;
     }
 }

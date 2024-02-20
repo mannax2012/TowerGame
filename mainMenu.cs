@@ -17,7 +17,8 @@ namespace TowerGame
 {
     public partial class mainMenu : Form
     {
-        public static string connectionString { get; } = @"Data Source=characters.db;Version=3;";
+        private characterDataManagement character;
+        public static string connectionString { get; } = @"Data Source=Characters.db;Version=3;";
         public mainMenu()
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace TowerGame
             customProgressBar.Size = new Size(200, 20); // Set size as needed
             customProgressBar.Location = new Point(50, 50); // Set location as needed
             this.Controls.Add(customProgressBar);
+            UpdateHealthBar();
 
         }
 
@@ -35,17 +37,17 @@ namespace TowerGame
             characterName.Text = character.Name;
             CharacterLevel.Text = character.Level.ToString(); 
             characterClass.Text = character.pClassName;
-            characterHEALTH.Text = character.Health.ToString() + " / " + character.HealthMax.ToString();
+            characterHEALTH.Text = character.Health.ToString();
 
-            characterMAGIC.Text = character.Magic.ToString() + " / " + character.MagicMax.ToString();
+            characterMAGIC.Text = character.Magic.ToString();
             
             characterSTR.Text = character.Strength.ToString();
             characterDEX.Text = character.Dexterity.ToString();
             characterINTEL.Text = character.Intellect.ToString();
             characterSTAM.Text = character.Stamina.ToString();
 
-            characterEXP.Text = character.playerExP.ToString() + " / " + character.playerExPMAX.ToString();
-          
+            characterEXP.Text = character.playerExP.ToString();
+            characterEXPMAX.Text = character.playerExPMAX.ToString();
 
             progressBarHealth.Minimum = 0;
             progressBarHealth.Maximum = character.HealthMax;
@@ -59,9 +61,8 @@ namespace TowerGame
             progressBarEXP.ForeColor = Color.Purple;
             progressBarEXP.Minimum = 0;
             progressBarEXP.Maximum = character.playerExPMAX;
-            //progressBarEXP.Value = character.playerExP;
-            progressBarEXP.Value = 250;
-
+            progressBarEXP.Value = character.playerExP;
+            
         }
         private void newCharacterToolStripMenuItem2_Click(object sender, EventArgs e)
         {
@@ -77,12 +78,16 @@ namespace TowerGame
                 // Create the database file if it doesn't exist
                 SQLiteConnection.CreateFile("Characters.db");
             }
+
+            // Connection string
+            string connectionString = @"Data Source=Characters.db;Version=3;";
+
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
 
                 // Check if the character already exists
-                if (loadCharacter.CharacterExists(playerName, connection))
+                if (CharacterExists(playerName, connection))
                 {
                     // Ask user for confirmation to overwrite
                     DialogResult result = MessageBox.Show("A character with the same name already exists. Do you want to overwrite it?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -90,12 +95,12 @@ namespace TowerGame
                     {
                         return; // User chose not to overwrite
                     }
-                    DatabaseManagement dataManager = new DatabaseManagement();
-                    dataManager.deleteCharacter(playerName);
-                }
 
+                    DatabaseManagement Database = new DatabaseManagement();
+                    Database.deleteCharacter(playerName);
+                }
                 // Insert or update the character
-                string insertQuery = "INSERT INTO Characters (Name, ClassName, Level, Health, HealthMax, Magic, MagicMax, Strength, Dexterity, Intellect, Stamina, CurrentEXP, EXPMAX) VALUES (@Name, @ClassName, @Level, @Health, @HealthMax @Magic, @MagicMax, @Strength, @Dexterity, @Intellect, @Stamina, @CurrentEXP, @EXPMAX)";
+                string insertQuery = "INSERT INTO Characters (Name, ClassName, Level, Health, HealthMax, Magic, MagicMax, Strength, Dexterity, Intellect, Stamina, CurrentEXP, EXPMAX) VALUES (@Name, @ClassName, @Level, @Health, @HealthMax, @Magic, @MagicMax, @Strength, @Dexterity, @Intellect, @Stamina, @CurrentEXP, @EXPMAX)";
                 SQLiteCommand insertCommand = new SQLiteCommand(insertQuery, connection);
                 insertCommand.Parameters.AddWithValue("@Name", playerName);
                 insertCommand.Parameters.AddWithValue("@ClassName", playerClass);
@@ -110,8 +115,21 @@ namespace TowerGame
                 insertCommand.Parameters.AddWithValue("@Stamina", pStamina);
                 insertCommand.Parameters.AddWithValue("@CurrentEXP", pExP);
                 insertCommand.Parameters.AddWithValue("@EXPMAX", pExPMAX);
+
                 insertCommand.ExecuteNonQuery();
+
+
+                characterDataManagement character = new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
+                updateCharacterData(character);
             }
+        }
+        public static bool CharacterExists(string playerName, SQLiteConnection connection)
+        {
+            string selectQuery = "SELECT COUNT(*) FROM Characters WHERE Name = @Name";
+            SQLiteCommand selectCommand = new SQLiteCommand(selectQuery, connection);
+            selectCommand.Parameters.AddWithValue("@Name", playerName);
+            int count = Convert.ToInt32(selectCommand.ExecuteScalar());
+            return count > 0;
         }
         private void newCharacterToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -119,18 +137,18 @@ namespace TowerGame
             string playerClass = characterClass.Text;
             int pLevel = int.Parse(CharacterLevel.Text);
             int pStrength = int.Parse(characterSTR.Text);
-            int pDexterity = int.Parse(characterSTR.Text);
-            int pIntellect = int.Parse(characterSTR.Text);
-            int pStamina = int.Parse(characterSTR.Text);
-            int pHealth = int.Parse(characterSTR.Text);
-            int pHealthMax = int.Parse(characterSTR.Text);
-            int pMagic = int.Parse(characterSTR.Text);
-            int pMagicMax = int.Parse(characterSTR.Text);
-            int pExP = int.Parse(characterSTR.Text);
-            int pExPMAX = int.Parse(characterSTR.Text);
-
+            int pDexterity = int.Parse(characterDEX.Text);
+            int pIntellect = int.Parse(characterINTEL.Text);
+            int pStamina = int.Parse(characterSTAM.Text);
+            int pHealth = int.Parse(characterHEALTH.Text);
+            int pHealthMax = int.Parse(characterHEALTH.Text);
+            int pMagic = int.Parse(characterMAGIC.Text);
+            int pMagicMax = int.Parse(characterMAGIC.Text);
+            int pExP = int.Parse(characterEXP.Text);
+            int pExPMAX = int.Parse(characterEXP.Text);
 
             SaveCharacter(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -144,18 +162,20 @@ namespace TowerGame
             newCharacter.Show();
             this.Hide();
         }
-        private void UpdateHealthBar(characterDataManagement characterData)
+        private void UpdateHealthBar()
         {
             // Update the health bar's width based on player's health
             int maxWidth = 200; // Maximum width of the health bar
-            int currentWidth = (int)Math.Round((double)characterData.Health / 100 * maxWidth);
+            int currentWidth = (int)Math.Round((double)int.Parse(characterHEALTH.Text) / 100 * maxWidth);
             healthBarPictureBox.Size = new Size(currentWidth, healthBarPictureBox.Height);
 
             // Update the health value text
-            //healthLabel.Text = characterData.Health.ToString();
+            //characterHEALTH.Text = characterData.Health.ToString();
             //characterData.HealthMax = 100;
+            int maxHP = int.Parse(characterHEALTHMax.Text);
+            int currentHP = int.Parse(characterHEALTH.Text);
             // Change health bar color based on health percentage
-            if (characterData.Health < 0.40 * characterData.HealthMax)
+            if (currentHP < 0.40 * maxHP)
             {
                 healthBarPictureBox.BackColor = Color.Red;
             }
@@ -163,6 +183,20 @@ namespace TowerGame
             {
                 healthBarPictureBox.BackColor = Color.Green;
             }
+        }
+
+        private void expBTN_Click(object sender, EventArgs e)
+        {
+            int playerExP = int.Parse(characterEXP.Text);
+            playerExP += 100;
+            characterEXP.Text = playerExP.ToString();
+            int value = int.Parse(characterEXP.Text);
+            CustomProgressBar customBar = new CustomProgressBar();
+            customBar.UpdateValue(value);
+            progressBarEXP.ForeColor = Color.Purple;
+            progressBarEXP.Minimum = 0;
+            progressBarEXP.Maximum = int.Parse(characterEXPMAX.Text);
+            progressBarEXP.Value = int.Parse(characterEXP.Text);
         }
     }
     public class CustomProgressBar : PictureBox

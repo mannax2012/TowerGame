@@ -15,6 +15,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(loadCharacter));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtLevel = new System.Windows.Forms.TextBox();
@@ -92,6 +93,7 @@
             this.Controls.Add(this.txtLevel);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.dataGridView1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "loadCharacter";
             this.Text = "Load Character";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

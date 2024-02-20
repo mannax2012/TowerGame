@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(createCharacter));
             this.comboBoxClassSelect = new System.Windows.Forms.ComboBox();
             this.characterNameEntry = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -276,6 +277,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.characterNameEntry);
             this.Controls.Add(this.comboBoxClassSelect);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "createCharacter";
             this.Text = "createCharacter";
             this.ResumeLayout(false);
