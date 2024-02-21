@@ -185,6 +185,7 @@ namespace TowerGame
                 mainMenu main = new mainMenu();
                 main.updateCharacterData(character);
                 main.Show();
+                main.newCharacterToolStripMenuItem1.Enabled = true;
                 this.Close();
               }
         }

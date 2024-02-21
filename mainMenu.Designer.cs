@@ -100,6 +100,7 @@
             // 
             // newCharacterToolStripMenuItem1
             // 
+            this.newCharacterToolStripMenuItem1.Enabled = false;
             this.newCharacterToolStripMenuItem1.Name = "newCharacterToolStripMenuItem1";
             this.newCharacterToolStripMenuItem1.Size = new System.Drawing.Size(134, 22);
             this.newCharacterToolStripMenuItem1.Text = "Save Game";
@@ -131,7 +132,7 @@
             // CharacterLevel
             // 
             this.CharacterLevel.AutoSize = true;
-            this.CharacterLevel.Location = new System.Drawing.Point(259, 154);
+            this.CharacterLevel.Location = new System.Drawing.Point(295, 154);
             this.CharacterLevel.Name = "CharacterLevel";
             this.CharacterLevel.Size = new System.Drawing.Size(13, 13);
             this.CharacterLevel.TabIndex = 2;
@@ -339,7 +340,7 @@
             // 
             // expBTN
             // 
-            this.expBTN.Location = new System.Drawing.Point(224, 222);
+            this.expBTN.Location = new System.Drawing.Point(223, 252);
             this.expBTN.Name = "expBTN";
             this.expBTN.Size = new System.Drawing.Size(75, 23);
             this.expBTN.TabIndex = 57;
@@ -438,17 +439,10 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newCharacterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newCharacterToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem newCharacterToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label characterName;
-        private System.Windows.Forms.Label CharacterLevel;
-        private System.Windows.Forms.Label characterEXP;
         private System.Windows.Forms.Label characterMAGIC;
-        private System.Windows.Forms.Label characterSTAM;
-        private System.Windows.Forms.Label characterINTEL;
-        private System.Windows.Forms.Label characterDEX;
-        private System.Windows.Forms.Label characterSTR;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
@@ -460,16 +454,23 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label characterClass;
-        private System.Windows.Forms.ProgressBar progressBarEXP;
         public System.Windows.Forms.ProgressBar progressBarHealth;
         public System.Windows.Forms.ProgressBar progressBarMagic;
         public System.Windows.Forms.Label characterHEALTH;
         private System.Windows.Forms.PictureBox mindBarPictureBox;
         private System.Windows.Forms.PictureBox healthBarPictureBox;
         private System.Windows.Forms.Button expBTN;
-        private System.Windows.Forms.Label characterEXPMAX;
         private System.Windows.Forms.Label label12;
         public System.Windows.Forms.Label characterHEALTHMax;
         public System.Windows.Forms.Label characterMAGICMax;
+        public System.Windows.Forms.ToolStripMenuItem newCharacterToolStripMenuItem1;
+        public System.Windows.Forms.Label CharacterLevel;
+        public System.Windows.Forms.Label characterEXP;
+        public System.Windows.Forms.Label characterSTAM;
+        public System.Windows.Forms.Label characterINTEL;
+        public System.Windows.Forms.Label characterDEX;
+        public System.Windows.Forms.Label characterSTR;
+        public System.Windows.Forms.Label characterEXPMAX;
+        public System.Windows.Forms.ProgressBar progressBarEXP;
     }
 }

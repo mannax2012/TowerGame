@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace TowerGame
 {
@@ -79,6 +83,32 @@ namespace TowerGame
             Stamina = pStamina;
             playerExP = pExP;
             playerExPMAX = pExPMAX;
+        }
+    }
+    public class playerLevelUp
+    {
+        public static string connectionString { get; } = @"Data Source=characters.db;Version=3;";
+        public void playerLevelUpData(characterDataManagement character)
+        {
+            double experienceMultiplier = 10.75;
+            double quadraticCoefficient = 1.5;
+            int playerEXP = character.playerExP;
+            int pLevel = character.Level;
+            string playerName = character.Name;
+            string playerClass = character.pClassName;
+            int pStrength = character.Strength;
+            int pDexterity = character.Dexterity;
+            int pIntellect = character.Intellect;
+            int pHealth = character.Health;
+            int pHealthMax = character.HealthMax;
+            int pMagic = character.Magic;
+            int pMagicMax = character.MagicMax;
+            int pExPMAX = character.playerExPMAX;
+
+            int maxEXPnew = character.playerExP + (int)(10 * (experienceMultiplier * Math.Pow(character.Level, 2)) + (quadraticCoefficient * character.Level));
+            character.Level = pLevel + 1;
+            character.playerExPMAX += maxEXPnew;
+            //Console.Write("Passed Level Up");
         }
     }
 }

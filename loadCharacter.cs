@@ -97,6 +97,7 @@ namespace TowerGame
                 main.Hide();
                 this.Close();
                 main.Show();
+                main.newCharacterToolStripMenuItem1.Enabled = true;
 
             }
             else

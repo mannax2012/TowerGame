@@ -37,10 +37,13 @@ namespace TowerGame
             characterName.Text = character.Name;
             CharacterLevel.Text = character.Level.ToString(); 
             characterClass.Text = character.pClassName;
+
             characterHEALTH.Text = character.Health.ToString();
+            characterHEALTHMax.Text = character.HealthMax.ToString();
 
             characterMAGIC.Text = character.Magic.ToString();
-            
+            characterMAGICMax.Text = character.MagicMax.ToString();
+
             characterSTR.Text = character.Strength.ToString();
             characterDEX.Text = character.Dexterity.ToString();
             characterINTEL.Text = character.Intellect.ToString();
@@ -141,11 +144,11 @@ namespace TowerGame
             int pIntellect = int.Parse(characterINTEL.Text);
             int pStamina = int.Parse(characterSTAM.Text);
             int pHealth = int.Parse(characterHEALTH.Text);
-            int pHealthMax = int.Parse(characterHEALTH.Text);
+            int pHealthMax = int.Parse(characterHEALTHMax.Text);
             int pMagic = int.Parse(characterMAGIC.Text);
-            int pMagicMax = int.Parse(characterMAGIC.Text);
+            int pMagicMax = int.Parse(characterMAGICMax.Text);
             int pExP = int.Parse(characterEXP.Text);
-            int pExPMAX = int.Parse(characterEXP.Text);
+            int pExPMAX = int.Parse(characterEXPMAX.Text);
 
             SaveCharacter(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
 
@@ -178,25 +181,50 @@ namespace TowerGame
             if (currentHP < 0.40 * maxHP)
             {
                 healthBarPictureBox.BackColor = Color.Red;
+                progressBarHealth.Minimum = 0;
+                progressBarHealth.Maximum = int.Parse(characterHEALTHMax.Text);
+                progressBarHealth.Value = int.Parse(characterHEALTH.Text);
             }
             else
             {
-                healthBarPictureBox.BackColor = Color.Green;
+                progressBarHealth.Minimum = 0;
+                progressBarHealth.Maximum = int.Parse(characterHEALTHMax.Text);
+                progressBarHealth.Value = int.Parse(characterHEALTH.Text);
             }
         }
 
         private void expBTN_Click(object sender, EventArgs e)
         {
-            int playerExP = int.Parse(characterEXP.Text);
-            playerExP += 100;
-            characterEXP.Text = playerExP.ToString();
-            int value = int.Parse(characterEXP.Text);
-            CustomProgressBar customBar = new CustomProgressBar();
-            customBar.UpdateValue(value);
-            progressBarEXP.ForeColor = Color.Purple;
-            progressBarEXP.Minimum = 0;
-            progressBarEXP.Maximum = int.Parse(characterEXPMAX.Text);
-            progressBarEXP.Value = int.Parse(characterEXP.Text);
+            string playerName = characterName.Text;
+            string playerClass = characterClass.Text;
+            int pLevel = int.Parse(CharacterLevel.Text);
+            int pStrength = int.Parse(characterSTR.Text);
+            int pDexterity = int.Parse(characterDEX.Text);
+            int pIntellect = int.Parse(characterINTEL.Text);
+            int pStamina = int.Parse(characterSTAM.Text);
+            int pHealth = int.Parse(characterHEALTH.Text);
+            int pHealthMax = int.Parse(characterHEALTHMax.Text);
+            int pMagic = int.Parse(characterMAGIC.Text);
+            int pMagicMax = int.Parse(characterMAGICMax.Text);
+            int pExP = int.Parse(characterEXP.Text);
+            int pExPMAX = int.Parse(characterEXPMAX.Text);
+            pExP += 150;
+            if (pExP >= pExPMAX)
+            {
+                pExP = pExP - pExPMAX;
+                playerLevelUp player = new playerLevelUp();
+                characterDataManagement character = new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
+                player.playerLevelUpData(character);
+                updateCharacterData(character);
+            }
+            else
+            {
+                progressBarEXP.ForeColor = Color.Purple;
+                progressBarEXP.Minimum = 0;
+                progressBarEXP.Maximum = int.Parse(characterEXPMAX.Text);
+                progressBarEXP.Value = pExP;
+                characterEXP.Text = pExP.ToString();
+            }
         }
     }
     public class CustomProgressBar : PictureBox
