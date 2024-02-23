@@ -58,16 +58,16 @@
             this.progressBarHealth = new System.Windows.Forms.ProgressBar();
             this.progressBarMagic = new System.Windows.Forms.ProgressBar();
             this.progressBarEXP = new System.Windows.Forms.ProgressBar();
-            this.mindBarPictureBox = new System.Windows.Forms.PictureBox();
-            this.healthBarPictureBox = new System.Windows.Forms.PictureBox();
             this.expBTN = new System.Windows.Forms.Button();
             this.characterEXPMAX = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.characterHEALTHMax = new System.Windows.Forms.Label();
             this.characterMAGICMax = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.buttonDamageTest = new System.Windows.Forms.Button();
+            this.buttonFullHeal = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mindBarPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.healthBarPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -123,7 +123,7 @@
             // characterName
             // 
             this.characterName.AutoSize = true;
-            this.characterName.Location = new System.Drawing.Point(108, 126);
+            this.characterName.Location = new System.Drawing.Point(108, 35);
             this.characterName.Name = "characterName";
             this.characterName.Size = new System.Drawing.Size(67, 13);
             this.characterName.TabIndex = 1;
@@ -132,7 +132,7 @@
             // CharacterLevel
             // 
             this.CharacterLevel.AutoSize = true;
-            this.CharacterLevel.Location = new System.Drawing.Point(295, 154);
+            this.CharacterLevel.Location = new System.Drawing.Point(325, 67);
             this.CharacterLevel.Name = "CharacterLevel";
             this.CharacterLevel.Size = new System.Drawing.Size(13, 13);
             this.CharacterLevel.TabIndex = 2;
@@ -141,7 +141,7 @@
             // characterEXP
             // 
             this.characterEXP.AutoSize = true;
-            this.characterEXP.Location = new System.Drawing.Point(295, 180);
+            this.characterEXP.Location = new System.Drawing.Point(325, 82);
             this.characterEXP.Name = "characterEXP";
             this.characterEXP.Size = new System.Drawing.Size(13, 13);
             this.characterEXP.TabIndex = 40;
@@ -150,7 +150,7 @@
             // characterMAGIC
             // 
             this.characterMAGIC.AutoSize = true;
-            this.characterMAGIC.Location = new System.Drawing.Point(108, 180);
+            this.characterMAGIC.Location = new System.Drawing.Point(108, 99);
             this.characterMAGIC.Name = "characterMAGIC";
             this.characterMAGIC.Size = new System.Drawing.Size(13, 13);
             this.characterMAGIC.TabIndex = 39;
@@ -159,7 +159,7 @@
             // characterHEALTH
             // 
             this.characterHEALTH.AutoSize = true;
-            this.characterHEALTH.Location = new System.Drawing.Point(108, 154);
+            this.characterHEALTH.Location = new System.Drawing.Point(108, 67);
             this.characterHEALTH.Name = "characterHEALTH";
             this.characterHEALTH.Size = new System.Drawing.Size(13, 13);
             this.characterHEALTH.TabIndex = 38;
@@ -168,7 +168,7 @@
             // characterSTAM
             // 
             this.characterSTAM.AutoSize = true;
-            this.characterSTAM.Location = new System.Drawing.Point(108, 283);
+            this.characterSTAM.Location = new System.Drawing.Point(108, 213);
             this.characterSTAM.Name = "characterSTAM";
             this.characterSTAM.Size = new System.Drawing.Size(13, 13);
             this.characterSTAM.TabIndex = 37;
@@ -177,7 +177,7 @@
             // characterINTEL
             // 
             this.characterINTEL.AutoSize = true;
-            this.characterINTEL.Location = new System.Drawing.Point(108, 258);
+            this.characterINTEL.Location = new System.Drawing.Point(108, 188);
             this.characterINTEL.Name = "characterINTEL";
             this.characterINTEL.Size = new System.Drawing.Size(13, 13);
             this.characterINTEL.TabIndex = 36;
@@ -186,7 +186,7 @@
             // characterDEX
             // 
             this.characterDEX.AutoSize = true;
-            this.characterDEX.Location = new System.Drawing.Point(108, 233);
+            this.characterDEX.Location = new System.Drawing.Point(108, 163);
             this.characterDEX.Name = "characterDEX";
             this.characterDEX.Size = new System.Drawing.Size(13, 13);
             this.characterDEX.TabIndex = 35;
@@ -195,7 +195,7 @@
             // characterSTR
             // 
             this.characterSTR.AutoSize = true;
-            this.characterSTR.Location = new System.Drawing.Point(108, 206);
+            this.characterSTR.Location = new System.Drawing.Point(108, 136);
             this.characterSTR.Name = "characterSTR";
             this.characterSTR.Size = new System.Drawing.Size(13, 13);
             this.characterSTR.TabIndex = 34;
@@ -204,7 +204,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(209, 180);
+            this.label11.Location = new System.Drawing.Point(237, 83);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 13);
             this.label11.TabIndex = 33;
@@ -213,7 +213,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 282);
+            this.label10.Location = new System.Drawing.Point(12, 212);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(48, 13);
             this.label10.TabIndex = 32;
@@ -222,7 +222,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 257);
+            this.label9.Location = new System.Drawing.Point(12, 187);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(47, 13);
             this.label9.TabIndex = 31;
@@ -231,7 +231,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 232);
+            this.label8.Location = new System.Drawing.Point(12, 162);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(51, 13);
             this.label8.TabIndex = 30;
@@ -240,7 +240,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 205);
+            this.label7.Location = new System.Drawing.Point(12, 135);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(50, 13);
             this.label7.TabIndex = 29;
@@ -249,7 +249,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 180);
+            this.label6.Location = new System.Drawing.Point(12, 99);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(71, 13);
             this.label6.TabIndex = 28;
@@ -258,7 +258,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(11, 154);
+            this.label5.Location = new System.Drawing.Point(12, 67);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(73, 13);
             this.label5.TabIndex = 27;
@@ -267,7 +267,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(208, 154);
+            this.label3.Location = new System.Drawing.Point(237, 67);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(36, 13);
             this.label3.TabIndex = 25;
@@ -276,7 +276,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(209, 126);
+            this.label2.Location = new System.Drawing.Point(237, 35);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 24;
@@ -285,7 +285,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 126);
+            this.label1.Location = new System.Drawing.Point(12, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(87, 13);
             this.label1.TabIndex = 23;
@@ -294,7 +294,7 @@
             // characterClass
             // 
             this.characterClass.AutoSize = true;
-            this.characterClass.Location = new System.Drawing.Point(257, 126);
+            this.characterClass.Location = new System.Drawing.Point(285, 35);
             this.characterClass.Name = "characterClass";
             this.characterClass.Size = new System.Drawing.Size(67, 13);
             this.characterClass.TabIndex = 49;
@@ -302,7 +302,7 @@
             // 
             // progressBarHealth
             // 
-            this.progressBarHealth.Location = new System.Drawing.Point(358, 394);
+            this.progressBarHealth.Location = new System.Drawing.Point(91, 51);
             this.progressBarHealth.Name = "progressBarHealth";
             this.progressBarHealth.Size = new System.Drawing.Size(117, 12);
             this.progressBarHealth.TabIndex = 52;
@@ -310,37 +310,21 @@
             // progressBarMagic
             // 
             this.progressBarMagic.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.progressBarMagic.Location = new System.Drawing.Point(358, 412);
+            this.progressBarMagic.Location = new System.Drawing.Point(91, 83);
             this.progressBarMagic.Name = "progressBarMagic";
             this.progressBarMagic.Size = new System.Drawing.Size(117, 12);
             this.progressBarMagic.TabIndex = 53;
             // 
             // progressBarEXP
             // 
-            this.progressBarEXP.Location = new System.Drawing.Point(358, 430);
+            this.progressBarEXP.Location = new System.Drawing.Point(235, 51);
             this.progressBarEXP.Name = "progressBarEXP";
             this.progressBarEXP.Size = new System.Drawing.Size(117, 12);
             this.progressBarEXP.TabIndex = 54;
             // 
-            // mindBarPictureBox
-            // 
-            this.mindBarPictureBox.Location = new System.Drawing.Point(337, 272);
-            this.mindBarPictureBox.Name = "mindBarPictureBox";
-            this.mindBarPictureBox.Size = new System.Drawing.Size(100, 50);
-            this.mindBarPictureBox.TabIndex = 55;
-            this.mindBarPictureBox.TabStop = false;
-            // 
-            // healthBarPictureBox
-            // 
-            this.healthBarPictureBox.Location = new System.Drawing.Point(337, 205);
-            this.healthBarPictureBox.Name = "healthBarPictureBox";
-            this.healthBarPictureBox.Size = new System.Drawing.Size(100, 50);
-            this.healthBarPictureBox.TabIndex = 56;
-            this.healthBarPictureBox.TabStop = false;
-            // 
             // expBTN
             // 
-            this.expBTN.Location = new System.Drawing.Point(223, 252);
+            this.expBTN.Location = new System.Drawing.Point(252, 136);
             this.expBTN.Name = "expBTN";
             this.expBTN.Size = new System.Drawing.Size(75, 23);
             this.expBTN.TabIndex = 57;
@@ -351,7 +335,7 @@
             // characterEXPMAX
             // 
             this.characterEXPMAX.AutoSize = true;
-            this.characterEXPMAX.Location = new System.Drawing.Point(295, 206);
+            this.characterEXPMAX.Location = new System.Drawing.Point(325, 99);
             this.characterEXPMAX.Name = "characterEXPMAX";
             this.characterEXPMAX.Size = new System.Drawing.Size(13, 13);
             this.characterEXPMAX.TabIndex = 58;
@@ -360,7 +344,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(209, 205);
+            this.label12.Location = new System.Drawing.Point(237, 99);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(61, 13);
             this.label12.TabIndex = 59;
@@ -369,7 +353,7 @@
             // characterHEALTHMax
             // 
             this.characterHEALTHMax.AutoSize = true;
-            this.characterHEALTHMax.Location = new System.Drawing.Point(162, 154);
+            this.characterHEALTHMax.Location = new System.Drawing.Point(162, 67);
             this.characterHEALTHMax.Name = "characterHEALTHMax";
             this.characterHEALTHMax.Size = new System.Drawing.Size(13, 13);
             this.characterHEALTHMax.TabIndex = 60;
@@ -378,24 +362,64 @@
             // characterMAGICMax
             // 
             this.characterMAGICMax.AutoSize = true;
-            this.characterMAGICMax.Location = new System.Drawing.Point(162, 180);
+            this.characterMAGICMax.Location = new System.Drawing.Point(162, 99);
             this.characterMAGICMax.Name = "characterMAGICMax";
             this.characterMAGICMax.Size = new System.Drawing.Size(13, 13);
             this.characterMAGICMax.TabIndex = 61;
             this.characterMAGICMax.Text = "0";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(144, 66);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(12, 13);
+            this.label4.TabIndex = 62;
+            this.label4.Text = "/";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(144, 99);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(12, 13);
+            this.label13.TabIndex = 63;
+            this.label13.Text = "/";
+            // 
+            // buttonDamageTest
+            // 
+            this.buttonDamageTest.Location = new System.Drawing.Point(252, 165);
+            this.buttonDamageTest.Name = "buttonDamageTest";
+            this.buttonDamageTest.Size = new System.Drawing.Size(75, 23);
+            this.buttonDamageTest.TabIndex = 64;
+            this.buttonDamageTest.Text = "Damage 10";
+            this.buttonDamageTest.UseVisualStyleBackColor = true;
+            this.buttonDamageTest.Click += new System.EventHandler(this.buttonDamageTest_Click);
+            // 
+            // buttonFullHeal
+            // 
+            this.buttonFullHeal.Location = new System.Drawing.Point(252, 194);
+            this.buttonFullHeal.Name = "buttonFullHeal";
+            this.buttonFullHeal.Size = new System.Drawing.Size(75, 23);
+            this.buttonFullHeal.TabIndex = 65;
+            this.buttonFullHeal.Text = "Full Heal";
+            this.buttonFullHeal.UseVisualStyleBackColor = true;
+            this.buttonFullHeal.Click += new System.EventHandler(this.buttonFullHeal_Click);
             // 
             // mainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonFullHeal);
+            this.Controls.Add(this.buttonDamageTest);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.characterMAGICMax);
             this.Controls.Add(this.characterHEALTHMax);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.characterEXPMAX);
             this.Controls.Add(this.expBTN);
-            this.Controls.Add(this.healthBarPictureBox);
-            this.Controls.Add(this.mindBarPictureBox);
             this.Controls.Add(this.progressBarEXP);
             this.Controls.Add(this.progressBarMagic);
             this.Controls.Add(this.progressBarHealth);
@@ -427,8 +451,6 @@
             this.Text = "mainMenu";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mindBarPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.healthBarPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -457,8 +479,6 @@
         public System.Windows.Forms.ProgressBar progressBarHealth;
         public System.Windows.Forms.ProgressBar progressBarMagic;
         public System.Windows.Forms.Label characterHEALTH;
-        private System.Windows.Forms.PictureBox mindBarPictureBox;
-        private System.Windows.Forms.PictureBox healthBarPictureBox;
         private System.Windows.Forms.Button expBTN;
         private System.Windows.Forms.Label label12;
         public System.Windows.Forms.Label characterHEALTHMax;
@@ -472,5 +492,9 @@
         public System.Windows.Forms.Label characterSTR;
         public System.Windows.Forms.Label characterEXPMAX;
         public System.Windows.Forms.ProgressBar progressBarEXP;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button buttonDamageTest;
+        private System.Windows.Forms.Button buttonFullHeal;
     }
 }

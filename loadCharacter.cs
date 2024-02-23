@@ -93,7 +93,7 @@ namespace TowerGame
                 // Use the characterData object in other areas of the app
                 MessageBox.Show($"Loaded character: {characterData.Name}, Level: {characterData.Level}");
                 mainMenu main = new mainMenu();
-                main.updateCharacterData(characterData);
+                main.updateCharacterData(characterData, 0);
                 main.Hide();
                 this.Close();
                 main.Show();

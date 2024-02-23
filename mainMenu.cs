@@ -17,6 +17,7 @@ namespace TowerGame
 {
     public partial class mainMenu : Form
     {
+        public int damagetaken;
         private characterDataManagement character;
         public static string connectionString { get; } = @"Data Source=Characters.db;Version=3;";
         public mainMenu()
@@ -32,8 +33,10 @@ namespace TowerGame
 
         }
 
-        public void updateCharacterData(characterDataManagement character)
+        public void updateCharacterData(characterDataManagement character, int playerDamge)
         {
+
+            damagetaken += playerDamge;
             characterName.Text = character.Name;
             CharacterLevel.Text = character.Level.ToString(); 
             characterClass.Text = character.pClassName;
@@ -52,9 +55,12 @@ namespace TowerGame
             characterEXP.Text = character.playerExP.ToString();
             characterEXPMAX.Text = character.playerExPMAX.ToString();
 
+            int newHealth = int.Parse(characterHEALTHMax.Text) - int.Parse(characterHEALTH.Text);
             progressBarHealth.Minimum = 0;
             progressBarHealth.Maximum = character.HealthMax;
-            progressBarHealth.Value = character.Health;
+            progressBarHealth.Value = character.Health + newHealth - damagetaken;
+            character.Health = newHealth + character.Health - damagetaken;
+            characterHEALTH.Text = character.Health.ToString();
 
             progressBarMagic.ForeColor = Color.Blue;
             progressBarMagic.Minimum = 0;
@@ -65,6 +71,7 @@ namespace TowerGame
             progressBarEXP.Minimum = 0;
             progressBarEXP.Maximum = character.playerExPMAX;
             progressBarEXP.Value = character.playerExP;
+            newHealth = 0;
             
         }
         private void newCharacterToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -123,7 +130,7 @@ namespace TowerGame
 
 
                 characterDataManagement character = new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
-                updateCharacterData(character);
+                updateCharacterData(character, 0);
             }
         }
         public static bool CharacterExists(string playerName, SQLiteConnection connection)
@@ -170,20 +177,20 @@ namespace TowerGame
             // Update the health bar's width based on player's health
             int maxWidth = 200; // Maximum width of the health bar
             int currentWidth = (int)Math.Round((double)int.Parse(characterHEALTH.Text) / 100 * maxWidth);
-            healthBarPictureBox.Size = new Size(currentWidth, healthBarPictureBox.Height);
 
             // Update the health value text
             //characterHEALTH.Text = characterData.Health.ToString();
             //characterData.HealthMax = 100;
             int maxHP = int.Parse(characterHEALTHMax.Text);
             int currentHP = int.Parse(characterHEALTH.Text);
+            int newHealth = int.Parse(characterHEALTHMax.Text) - int.Parse(characterHEALTH.Text);
             // Change health bar color based on health percentage
             if (currentHP < 0.40 * maxHP)
             {
-                healthBarPictureBox.BackColor = Color.Red;
+               
                 progressBarHealth.Minimum = 0;
                 progressBarHealth.Maximum = int.Parse(characterHEALTHMax.Text);
-                progressBarHealth.Value = int.Parse(characterHEALTH.Text);
+                progressBarHealth.Value = int.Parse(characterHEALTH.Text) + newHealth;
             }
             else
             {
@@ -215,7 +222,7 @@ namespace TowerGame
                 playerLevelUp player = new playerLevelUp();
                 characterDataManagement character = new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
                 player.playerLevelUpData(character);
-                updateCharacterData(character);
+                updateCharacterData(character, 0);
             }
             else
             {
@@ -225,6 +232,40 @@ namespace TowerGame
                 progressBarEXP.Value = pExP;
                 characterEXP.Text = pExP.ToString();
             }
+        }
+        public void grabSheetData()
+        {
+            string playerName = characterName.Text;
+            string playerClass = characterClass.Text;
+            int pLevel = int.Parse(CharacterLevel.Text);
+            int pStrength = int.Parse(characterSTR.Text);
+            int pDexterity = int.Parse(characterDEX.Text);
+            int pIntellect = int.Parse(characterINTEL.Text);
+            int pStamina = int.Parse(characterSTAM.Text);
+            int pHealth = int.Parse(characterHEALTH.Text);
+            int pHealthMax = int.Parse(characterHEALTHMax.Text);
+            int pMagic = int.Parse(characterMAGIC.Text);
+            int pMagicMax = int.Parse(characterMAGICMax.Text);
+            int pExP = int.Parse(characterEXP.Text);
+            int pExPMAX = int.Parse(characterEXPMAX.Text);
+
+                character = new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
+        }
+
+        private void buttonDamageTest_Click(object sender, EventArgs e)
+        {
+            int attackDamage = 10;
+            grabSheetData();
+            updateCharacterData(character, attackDamage);
+        }
+
+        private void buttonFullHeal_Click(object sender, EventArgs e)
+        {
+            int healAmount = damagetaken;
+
+            //damagetaken
+            grabSheetData();
+            updateCharacterData(character, 0);
         }
     }
     public class CustomProgressBar : PictureBox

@@ -217,13 +217,13 @@ namespace TowerGame
                 int pHealthMax = pHealth;
                 int pMagic = int.Parse(characterMAGICVal.Text);
                 int pMagicMax = pMagic;
-                int pExP = int.Parse(characterEXP.Text);
-                int pExPMAX = pLevel * 1000;
+                int pExP = 0;
+                int pExPMAX = 1000;
                 
                 createNewCharacter(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
                 characterDataManagement character = new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
                 mainMenu main = new mainMenu();
-                main.updateCharacterData(character);
+                main.updateCharacterData(character, 0);
                 main.Show();
                 main.newCharacterToolStripMenuItem1.Enabled = true;
                 this.Close();
