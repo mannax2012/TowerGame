@@ -16,5 +16,19 @@ namespace TowerGame
         {
             InitializeComponent();
         }
+
+        private void buttonNewGame_Click(object sender, EventArgs e)
+        {
+            createCharacter newCharacter = new createCharacter();
+            newCharacter.Show();
+            this.Hide();
+        }
+
+        private void buttonLoadGame_Click(object sender, EventArgs e)
+        {
+            loadCharacter loadCharacter = new loadCharacter();
+            loadCharacter.Show();
+            this.Hide();
+        }
     }
 }

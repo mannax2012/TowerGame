@@ -19,11 +19,27 @@ namespace TowerGame
         public string connectionString = @"Data Source=Classes.db;Version=3;";
         public loadClassData selectedClass;
         DataTable dtClasses;
+        int totalSP = 5;
+        public int totalAdjustedSTR;
+        public int totalAdjustedDEX;
+        public int totalAdjustedINTEL;
+        public int totalAdjustedSTAM;
+        public int currentSP = 0;
+        public int currentAdjustedHP = 0;
+        public int currentAdjustedMP = 0;
+        public int totalAdjustedHP = 0;
+        public int totalAdjustedMP = 0;
+
+        public int totalSTR;
+        public int totalDEX;
+        public int totalINTEL;
+        public int totalSTAM;
         public createCharacter()
         {
             InitializeComponent();
             InitializeClassDatabase();
             LoadClassesIntoComboBox();
+            getLoadStats();
             DatabaseManagement database = new DatabaseManagement();
             database.InitializeDatabase();
             comboBoxClassSelect.SelectedIndex = 0;
@@ -62,7 +78,7 @@ namespace TowerGame
                 if (!EntryExists("Priest", connection))
                 {
                     // If default entry does not exist, insert it
-                    string insertQuery = "INSERT INTO Classes (Name, str, dex, intel, stam) VALUES ('Mage', 0, 0, 10, 5)";
+                    string insertQuery = "INSERT INTO Classes (Name, str, dex, intel, stam) VALUES ('Priest', 0, 0, 10, 5)";
                     SQLiteCommand insertCommand = new SQLiteCommand(insertQuery, connection);
                     insertCommand.ExecuteNonQuery();
                 }
@@ -137,18 +153,19 @@ namespace TowerGame
             DataRow[] rows = dtClasses.Select($"Name = '{selectedClassName}'");
             if (rows.Length > 0)
             {
-                // Assuming "STR" is the column name for bonus strength in your DataTable
                 int selectedClassSTR = Convert.ToInt32(rows[0]["STR"]);
                 int selectedClassDEX = Convert.ToInt32(rows[0]["DEX"]);
                 int selectedClassINTEL = Convert.ToInt32(rows[0]["INTEL"]);
                 int selectedClassSTAM = Convert.ToInt32(rows[0]["STAM"]);
-
-                int pStrength = selectedClassSTR + 10;
-                int pDexterity = selectedClassDEX + 10;
-                int pIntellect = selectedClassINTEL + 10;
-                int pStamina = selectedClassSTAM + 10;
-                int pHealth = 100 + ((pStamina + pStrength) * 10);
-                int pMagic = 100 + ((pStamina + pIntellect) * 10);
+                       
+        
+        
+                int pStrength = (selectedClassSTR + 10) + totalAdjustedSTR;
+                int pDexterity = (selectedClassDEX + 10) + totalAdjustedDEX;
+                int pIntellect = (selectedClassINTEL + 10) + totalAdjustedINTEL;
+                int pStamina = (selectedClassSTAM + 10) + totalAdjustedSTAM;
+                int pHealth = 100 + (pStamina * 10) + currentAdjustedHP;
+                int pMagic = 100 + (pIntellect * 10)+ currentAdjustedMP;
 
                 characterHEALTHVal.Text = pHealth.ToString();
                 characterMAGICVal.Text = pMagic.ToString();
@@ -157,6 +174,28 @@ namespace TowerGame
                 characterINTEL.Text = pIntellect.ToString();
                 characterSTAM.Text = pStamina.ToString();
             }
+        }
+        public void getLoadStats()
+        {
+            int startingSTR = 10;
+            int startingDEX = 10;
+            int startingINTEL = 10;
+            int startingSTAM = 10;
+
+            int pStrength = startingSTR + totalAdjustedSTR;
+            int pDexterity = startingDEX + totalAdjustedDEX;
+            int pIntellect = startingINTEL + totalAdjustedINTEL;
+            int pStamina = startingSTAM + totalAdjustedSTAM;
+
+            int pHealth = 100 + (pStamina * 10) + currentAdjustedHP;
+            int pMagic = 100 + (pIntellect * 10) + currentAdjustedMP;
+
+            characterHEALTHVal.Text = pHealth.ToString();
+            characterMAGICVal.Text = pMagic.ToString();
+            characterSTR.Text = pStrength.ToString();
+            characterDEX.Text = pDexterity.ToString();
+            characterINTEL.Text = pIntellect.ToString();
+            characterSTAM.Text = pStamina.ToString();
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -180,6 +219,7 @@ namespace TowerGame
                 int pMagicMax = pMagic;
                 int pExP = int.Parse(characterEXP.Text);
                 int pExPMAX = pLevel * 1000;
+                
                 createNewCharacter(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
                 characterDataManagement character = new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
                 mainMenu main = new mainMenu();
@@ -262,8 +302,171 @@ namespace TowerGame
         private void CancelBTN_Click(object sender, EventArgs e)
         {
             this.Close();
-            mainMenu main = new mainMenu();
+            titleScreen main = new titleScreen();
             main.Show();
+        }
+        public void getSheetUpdate()
+        {
+            int pCurrentHealth = int.Parse(characterHEALTHVal.Text);
+            int pCurrentMagic = int.Parse(characterMAGICVal.Text);
+           int pHealthStep = pCurrentHealth - currentAdjustedHP;
+            int pMagicStep = pCurrentMagic - currentAdjustedMP;
+
+            int pHealth = pHealthStep + totalAdjustedHP;
+            characterHEALTHVal.Text = pHealth.ToString();
+            //totalAdjustedHPshow.Text = totalAdjustedHP.ToString();
+
+            int pMagic = pMagicStep + totalAdjustedMP;
+            characterMAGICVal.Text = pMagic.ToString();
+            //totalAdjustedHPshow.Text = totalAdjustedMP.ToString();
+        }
+        private void buttonAddSTR_Click(object sender, EventArgs e)
+        {
+            if (totalSP > 0)
+            {
+                totalSP = totalSP - 1;
+                totalAdjustedSTR = totalAdjustedSTR + 1;
+                
+                int currentSTR = int.Parse(characterSTR.Text);
+                
+                //int pMagic = 100 + ((pStamina + pIntellect) * 10);
+                int addedSTR = currentSTR + 1;
+                characterSTR.Text = addedSTR.ToString();
+                characterTotalSP.Text = totalSP.ToString();
+                getSheetUpdate();
+            }
+            else
+            {
+                MessageBox.Show($"Not enough skill points: {totalSP}");
+            }
+        }
+
+        private void buttonAddDEX_Click(object sender, EventArgs e)
+        {
+            if (totalSP > 0)
+            {
+                totalSP = totalSP - 1;
+                totalAdjustedDEX = totalAdjustedDEX + 1;
+                int currentDEX = int.Parse(characterDEX.Text);
+
+                int addedDEX = currentDEX + 1;
+                characterDEX.Text = addedDEX.ToString();
+                characterTotalSP.Text = totalSP.ToString();
+            }
+            else
+            {
+                MessageBox.Show($"Not enough skill points: {totalSP}");
+            }
+        }
+
+        private void buttonAddINTEL_Click(object sender, EventArgs e)
+        {
+            if (comboBoxClassSelect.SelectedIndex != 0)
+            {
+                if (totalSP > 0)
+                {
+                    totalSP = totalSP - 1;
+                    totalAdjustedINTEL = totalAdjustedINTEL + 1;
+                    int currentINTEL = int.Parse(characterINTEL.Text);
+
+                    int addedINTEL = currentINTEL + 1;
+                    characterINTEL.Text = addedINTEL.ToString();
+                    characterTotalSP.Text = totalSP.ToString();
+
+                    currentAdjustedMP = totalAdjustedMP;
+
+                    totalAdjustedMP = (totalAdjustedINTEL * 10);
+                    //totalAdjustedHPshow.Text = totalAdjustedMP.ToString();
+
+                    getSheetUpdate();
+                }
+                else
+                {
+                    MessageBox.Show($"Not enough skill points: {totalSP}");
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Select a Class first!");
+            }
+        }
+
+        private void buttonAddSTAM_Click(object sender, EventArgs e)
+        {
+            if (comboBoxClassSelect.SelectedIndex != 0)
+            {
+                if (totalSP > 0)
+                {
+                    totalSP = totalSP - 1;
+                    totalAdjustedSTAM = totalAdjustedSTAM + 1;
+                    int currentSTAM = int.Parse(characterSTAM.Text);
+
+                    int addedSTAM = currentSTAM + 1;
+                    characterSTAM.Text = addedSTAM.ToString();
+                    characterTotalSP.Text = totalSP.ToString();
+
+                    currentAdjustedHP = totalAdjustedHP;
+
+                    totalAdjustedHP = (totalAdjustedSTAM * 10);
+                    //totalAdjustedHPshow.Text = totalAdjustedHP.ToString();
+
+                    getSheetUpdate();
+                }
+                else
+                {
+                    MessageBox.Show($"Not enough skill points: {totalSP}");
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Select a Class first!");
+            }
+        }
+
+        private void buttonResetSkills_Click(object sender, EventArgs e)
+        {
+            resetSKillPoints();
+            getSheetUpdate();
+        }
+        public void resetSKillPoints()
+        {
+            if (totalAdjustedSTR > 0 || totalAdjustedINTEL > 0 || totalAdjustedSTAM > 0 || totalAdjustedDEX > 0)
+            {
+                totalSP += totalAdjustedSTR + totalAdjustedINTEL + totalAdjustedSTAM + totalAdjustedDEX;
+                characterTotalSP.Text = totalSP.ToString();
+
+                int totalSTR = int.Parse(characterSTR.Text) - totalAdjustedSTR;
+                characterSTR.Text = totalSTR.ToString();
+                totalAdjustedSTR = 0;
+
+                int totalDEX = int.Parse(characterDEX.Text) - totalAdjustedDEX;
+                characterDEX.Text = totalDEX.ToString();
+                totalAdjustedDEX = 0;
+
+                int totalINTEL = int.Parse(characterINTEL.Text) - totalAdjustedINTEL;
+                characterINTEL.Text = totalINTEL.ToString();
+                totalAdjustedINTEL = 0;
+
+                int totalSTAM = int.Parse(characterSTAM.Text) - totalAdjustedSTAM;
+                characterSTAM.Text = totalSTAM.ToString();
+                totalAdjustedSTAM = 0;
+
+                int baseHP = 100;
+                int adjustedHP = (int.Parse(characterSTAM.Text) * 10) + baseHP;
+                characterHEALTHVal.Text = adjustedHP.ToString();
+                totalAdjustedHP = 0;
+                currentAdjustedHP = 0;
+
+                int baseMP = 100;
+                int adjustedMP = (int.Parse(characterINTEL.Text) * 10) + baseMP;
+                characterMAGICVal.Text = adjustedMP.ToString();
+                totalAdjustedMP = 0;
+                currentAdjustedMP = 0;
+            }
+            else
+            {
+                MessageBox.Show($"Your Skill Points have already been reset: {totalSP}");
+            }
         }
     }
 

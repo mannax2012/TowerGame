@@ -22,7 +22,7 @@ namespace TowerGame
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new mainMenu());
+            Application.Run(new titleScreen());
         }
 
     }
@@ -90,6 +90,7 @@ namespace TowerGame
         public static string connectionString { get; } = @"Data Source=characters.db;Version=3;";
         public void playerLevelUpData(characterDataManagement character)
         {
+            Random random = new Random();
             double experienceMultiplier = 10.75;
             double quadraticCoefficient = 1.5;
             int playerEXP = character.playerExP;
@@ -97,6 +98,7 @@ namespace TowerGame
             string playerName = character.Name;
             string playerClass = character.pClassName;
             int pStrength = character.Strength;
+            int pStamina = character.Stamina;
             int pDexterity = character.Dexterity;
             int pIntellect = character.Intellect;
             int pHealth = character.Health;
@@ -105,9 +107,25 @@ namespace TowerGame
             int pMagicMax = character.MagicMax;
             int pExPMAX = character.playerExPMAX;
 
-            int maxEXPnew = character.playerExP + (int)(10 * (experienceMultiplier * Math.Pow(character.Level, 2)) + (quadraticCoefficient * character.Level));
+            int maxEXPnew = character.playerExPMAX + (int)(10 * (experienceMultiplier * Math.Pow(character.Level, 2)) + (quadraticCoefficient * character.Level));
+            int maxHPnew = pHealthMax + ((pStamina + pStrength) * 2);
+            int maxMPnew = pMagicMax + ((pStamina + pIntellect) * 2);
+            int STRnew = random.Next(10);
+            int DEXnew = random.Next(10);
+            int INTELnew = random.Next(10);
+            int STAMnew = random.Next(10);
+
+
+
             character.Level = pLevel + 1;
             character.playerExPMAX += maxEXPnew;
+            character.Strength += STRnew;
+            character.Stamina += STAMnew;
+            character.Dexterity += DEXnew;
+            character.Intellect += INTELnew;
+            character.HealthMax = maxHPnew;
+            character.MagicMax = maxMPnew;
+
             //Console.Write("Passed Level Up");
         }
     }
