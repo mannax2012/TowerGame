@@ -219,17 +219,22 @@ namespace TowerGame
                 int pMagicMax = pMagic;
                 int pExP = 0;
                 int pExPMAX = 1000;
+                int skillpointTotal = int.Parse(characterTotalSP.Text);
+                int playerCurrency = 0;
+                int inventorySlotCount = 10;
+
+
                 
-                createNewCharacter(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
-                characterDataManagement character = new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX);
+                characterDataManagement character = new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX, skillpointTotal, playerCurrency, inventorySlotCount);
+                createNewCharacter(character);
                 mainMenu main = new mainMenu();
-                main.updateCharacterData(character, 0);
+                main.updateCharacterData(character);
                 main.Show();
                 main.newCharacterToolStripMenuItem1.Enabled = true;
                 this.Close();
               }
         }
-        private void createNewCharacter(string playerName, string playerClass, int pLevel, int pStrength, int pDexterity, int pIntellect, int pStamina, int pHealth, int pHealthMax, int pMagic, int pMagicMax, int pExP, int pExPMAX)
+        private void createNewCharacter(characterDataManagement character)
         {
             // Check if the database file exists
             if (!File.Exists("Characters.db"))
@@ -246,7 +251,7 @@ namespace TowerGame
                 connection.Open();
 
                 // Check if the character already exists
-                if (CharacterExists(playerName, connection))
+                if (CharacterExists(character.Name, connection))
                 {
                     // Ask user for confirmation to overwrite
                     DialogResult result = MessageBox.Show("A character with the same name already exists. Do you want to overwrite it?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -256,24 +261,27 @@ namespace TowerGame
                     }
 
                     DatabaseManagement Database = new DatabaseManagement();
-                    Database.deleteCharacter(playerName);
+                    Database.deleteCharacter(character.Name);
                 }
                 // Insert or update the character
-                string insertQuery = "INSERT INTO Characters (Name, ClassName, Level, Health, HealthMax, Magic, MagicMax, Strength, Dexterity, Intellect, Stamina, CurrentEXP, EXPMAX) VALUES (@Name, @ClassName, @Level, @Health, @HealthMax, @Magic, @MagicMax, @Strength, @Dexterity, @Intellect, @Stamina, @CurrentEXP, @EXPMAX)";
+                string insertQuery = "INSERT INTO Characters (Name, ClassName, Level, Health, HealthMax, Magic, MagicMax, Strength, Dexterity, Intellect, Stamina, CurrentEXP, EXPMAX, SkillPoints, playerCurrency, inventorySlotCount) VALUES (@Name, @ClassName, @Level, @Health, @HealthMax, @Magic, @MagicMax, @Strength, @Dexterity, @Intellect, @Stamina, @CurrentEXP, @EXPMAX, @SkillPoints, @playerCurrency, @inventorySlotCount)";
                 SQLiteCommand insertCommand = new SQLiteCommand(insertQuery, connection);
-                insertCommand.Parameters.AddWithValue("@Name", playerName);
-                insertCommand.Parameters.AddWithValue("@ClassName", playerClass);
-                insertCommand.Parameters.AddWithValue("@Level", pLevel);
-                insertCommand.Parameters.AddWithValue("@Health", pHealth);
-                insertCommand.Parameters.AddWithValue("@HealthMax", pHealthMax);
-                insertCommand.Parameters.AddWithValue("@Magic", pMagic);
-                insertCommand.Parameters.AddWithValue("@MagicMax", pMagicMax);
-                insertCommand.Parameters.AddWithValue("@Strength", pStrength);
-                insertCommand.Parameters.AddWithValue("@Dexterity", pDexterity);
-                insertCommand.Parameters.AddWithValue("@Intellect", pIntellect);
-                insertCommand.Parameters.AddWithValue("@Stamina", pStamina);
-                insertCommand.Parameters.AddWithValue("@CurrentEXP", pExP);
-                insertCommand.Parameters.AddWithValue("@EXPMAX", pExPMAX);
+                insertCommand.Parameters.AddWithValue("@Name", character.Name);
+                insertCommand.Parameters.AddWithValue("@ClassName", character.pClassName);
+                insertCommand.Parameters.AddWithValue("@Level", character.Level);
+                insertCommand.Parameters.AddWithValue("@Health", character.Health);
+                insertCommand.Parameters.AddWithValue("@HealthMax", character.HealthMax);
+                insertCommand.Parameters.AddWithValue("@Magic", character.Magic);
+                insertCommand.Parameters.AddWithValue("@MagicMax", character.MagicMax);
+                insertCommand.Parameters.AddWithValue("@Strength", character.Strength);
+                insertCommand.Parameters.AddWithValue("@Dexterity", character.Dexterity);
+                insertCommand.Parameters.AddWithValue("@Intellect", character.Intellect);
+                insertCommand.Parameters.AddWithValue("@Stamina", character.Stamina);
+                insertCommand.Parameters.AddWithValue("@CurrentEXP", character.playerExP);
+                insertCommand.Parameters.AddWithValue("@EXPMAX", character.playerExPMAX);
+                insertCommand.Parameters.AddWithValue("@SkillPoints", character.SkillPoints);
+                insertCommand.Parameters.AddWithValue("@playerCurrency", character.playerCurrency);
+                insertCommand.Parameters.AddWithValue("@inventorySlotCount", character.inventorySlotCount);
 
                 insertCommand.ExecuteNonQuery();
             }
@@ -285,18 +293,6 @@ namespace TowerGame
             selectCommand.Parameters.AddWithValue("@Name", playerName);
             int count = Convert.ToInt32(selectCommand.ExecuteScalar());
             return count > 0;
-        }
-        public void DeleteCharacter(string playerName)
-        {
-            string connectionString = @"Data Source=Characters.db;Version=3;";
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-            {
-                            connection.Open();
-                string deleteQuery = "DELETE FROM Characters WHERE Name = @Name";
-                SQLiteCommand deleteCommand = new SQLiteCommand(deleteQuery, connection);
-                deleteCommand.Parameters.AddWithValue("@Name", playerName);
-                deleteCommand.ExecuteNonQuery();
-            }
         }
 
         private void CancelBTN_Click(object sender, EventArgs e)

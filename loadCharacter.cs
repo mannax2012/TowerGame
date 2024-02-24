@@ -17,7 +17,7 @@ namespace TowerGame
     {
         public string connectionString = @"Data Source=characters.db;Version=3;";
         
-        public characterDataManagement characterData;
+        public characterDataManagement character;
 
         public loadCharacter()
         {
@@ -32,8 +32,17 @@ namespace TowerGame
 
         private void LoadCharacters()
         {
+            /*
             List<characterDataManagement> characters = GetAllCharacters();
             dataGridView1.DataSource = characters;
+            */
+            List<characterDataManagement> character = GetAllCharacters();
+
+            // Create a list of DisplayCharacter objects containing only name and level
+            List<DisplayCharacter> displayCharacters = character.Select(c => new DisplayCharacter(c.Name, c.Level)).ToList();
+
+            // Set the DataSource of the DataGridView to the list of DisplayCharacter objects
+            dataGridView1.DataSource = displayCharacters;
         }
        private List<characterDataManagement> GetAllCharacters()
         {
@@ -59,8 +68,11 @@ namespace TowerGame
                     int pStamina = Convert.ToInt32(reader["Stamina"]);
                     int pExP = Convert.ToInt32(reader["CurrentEXP"]);
                     int pExPMAX = Convert.ToInt32(reader["EXPMAX"]);
+                    int characterTotalSP = Convert.ToInt32(reader["SkillPoints"]);
+                    int playerCurrency = Convert.ToInt32(reader["playerCurrency"]);
+                    int inventorySlotCount = Convert.ToInt32(reader["inventorySlotCOunt"]);
 
-                    characters.Add(new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX));
+                    characters.Add(new characterDataManagement(playerName, playerClass, pLevel, pStrength, pDexterity, pIntellect, pStamina, pHealth, pHealthMax, pMagic, pMagicMax, pExP, pExPMAX, characterTotalSP, playerCurrency, inventorySlotCount));
                 }
             }
             return characters;
@@ -70,11 +82,11 @@ namespace TowerGame
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 int selectedIndex = dataGridView1.SelectedRows[0].Index;
-                characterData = dataGridView1.Rows[selectedIndex].DataBoundItem as characterDataManagement;
+                character = dataGridView1.Rows[selectedIndex].DataBoundItem as characterDataManagement;
             }
             else
             {
-                characterData = null;
+                character = null;
             }
         }
         public static bool CharacterExists(string name, SQLiteConnection connection)
@@ -88,12 +100,12 @@ namespace TowerGame
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            if (characterData != null)
+
+            if (character != null)
             {
-                // Use the characterData object in other areas of the app
-                MessageBox.Show($"Loaded character: {characterData.Name}, Level: {characterData.Level}");
+                MessageBox.Show($"Loaded character: {character.Name}, Level: {character.Level}");
                 mainMenu main = new mainMenu();
-                main.updateCharacterData(characterData, 0);
+                main.updateCharacterData(character);
                 main.Hide();
                 this.Close();
                 main.Show();
@@ -108,29 +120,31 @@ namespace TowerGame
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            if (characterData != null)
+            DatabaseManagement databaseManagement = new DatabaseManagement();
+            if (character != null)
             {
                 if (MessageBox.Show("Are you sure you want to delete this character? Deleting a Character is PERMINATE!", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    DeleteCharacter(characterData.Name);
-                    LoadCharacters(); // Refresh DataGridView after deletion
+                    databaseManagement.deleteCharacter(character.Name);
+                    LoadCharacters();
                 }
             }
             else
             {
                 MessageBox.Show("Please select a character to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        
         }
-        public void DeleteCharacter(string name)
+    }
+    public class DisplayCharacter
+    {
+        public string Name { get; set; }
+        public int Level { get; set; }
+
+        public DisplayCharacter(string name, int level)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-                string deleteQuery = "DELETE FROM Characters WHERE Name = @Name";
-                SQLiteCommand deleteCommand = new SQLiteCommand(deleteQuery, connection);
-                deleteCommand.Parameters.AddWithValue("@Name", name);
-                deleteCommand.ExecuteNonQuery();
-            }
+            Name = name;
+            Level = level;
         }
     }
 }

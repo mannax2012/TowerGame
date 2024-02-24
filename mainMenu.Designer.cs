@@ -35,6 +35,8 @@
             this.newCharacterToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.newCharacterToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.towerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.characterName = new System.Windows.Forms.Label();
             this.CharacterLevel = new System.Windows.Forms.Label();
             this.characterEXP = new System.Windows.Forms.Label();
@@ -52,7 +54,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.characterClass = new System.Windows.Forms.Label();
             this.progressBarHealth = new System.Windows.Forms.ProgressBar();
@@ -67,13 +68,22 @@
             this.label13 = new System.Windows.Forms.Label();
             this.buttonDamageTest = new System.Windows.Forms.Button();
             this.buttonFullHeal = new System.Windows.Forms.Button();
+            this.buttonResetSkills = new System.Windows.Forms.Button();
+            this.buttonAddSTAM = new System.Windows.Forms.Button();
+            this.buttonAddINTEL = new System.Windows.Forms.Button();
+            this.buttonAddDEX = new System.Windows.Forms.Button();
+            this.buttonAddSTR = new System.Windows.Forms.Button();
+            this.characterTotalSP = new System.Windows.Forms.Label();
+            this.labelSP = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.shopToolStripMenuItem,
+            this.towerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -120,6 +130,18 @@
             this.exitToolStripMenuItem.Text = "Exit Game";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // shopToolStripMenuItem
+            // 
+            this.shopToolStripMenuItem.Name = "shopToolStripMenuItem";
+            this.shopToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.shopToolStripMenuItem.Text = "Shop";
+            // 
+            // towerToolStripMenuItem
+            // 
+            this.towerToolStripMenuItem.Name = "towerToolStripMenuItem";
+            this.towerToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.towerToolStripMenuItem.Text = "Tower";
+            // 
             // characterName
             // 
             this.characterName.AutoSize = true;
@@ -132,7 +154,7 @@
             // CharacterLevel
             // 
             this.CharacterLevel.AutoSize = true;
-            this.CharacterLevel.Location = new System.Drawing.Point(325, 67);
+            this.CharacterLevel.Location = new System.Drawing.Point(279, 35);
             this.CharacterLevel.Name = "CharacterLevel";
             this.CharacterLevel.Size = new System.Drawing.Size(13, 13);
             this.CharacterLevel.TabIndex = 2;
@@ -141,7 +163,7 @@
             // characterEXP
             // 
             this.characterEXP.AutoSize = true;
-            this.characterEXP.Location = new System.Drawing.Point(325, 82);
+            this.characterEXP.Location = new System.Drawing.Point(327, 66);
             this.characterEXP.Name = "characterEXP";
             this.characterEXP.Size = new System.Drawing.Size(13, 13);
             this.characterEXP.TabIndex = 40;
@@ -204,7 +226,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(237, 83);
+            this.label11.Location = new System.Drawing.Point(239, 67);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 13);
             this.label11.TabIndex = 33;
@@ -267,20 +289,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(237, 67);
+            this.label3.Location = new System.Drawing.Point(237, 35);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(36, 13);
             this.label3.TabIndex = 25;
             this.label3.Text = "Level:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(237, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 24;
-            this.label2.Text = "Class:";
             // 
             // label1
             // 
@@ -294,11 +307,11 @@
             // characterClass
             // 
             this.characterClass.AutoSize = true;
-            this.characterClass.Location = new System.Drawing.Point(285, 35);
+            this.characterClass.Location = new System.Drawing.Point(308, 35);
             this.characterClass.Name = "characterClass";
-            this.characterClass.Size = new System.Drawing.Size(67, 13);
+            this.characterClass.Size = new System.Drawing.Size(92, 13);
             this.characterClass.TabIndex = 49;
-            this.characterClass.Text = "defaultName";
+            this.characterClass.Text = "defaultClassName";
             // 
             // progressBarHealth
             // 
@@ -317,14 +330,14 @@
             // 
             // progressBarEXP
             // 
-            this.progressBarEXP.Location = new System.Drawing.Point(235, 51);
+            this.progressBarEXP.Location = new System.Drawing.Point(240, 51);
             this.progressBarEXP.Name = "progressBarEXP";
             this.progressBarEXP.Size = new System.Drawing.Size(117, 12);
             this.progressBarEXP.TabIndex = 54;
             // 
             // expBTN
             // 
-            this.expBTN.Location = new System.Drawing.Point(252, 136);
+            this.expBTN.Location = new System.Drawing.Point(227, 284);
             this.expBTN.Name = "expBTN";
             this.expBTN.Size = new System.Drawing.Size(75, 23);
             this.expBTN.TabIndex = 57;
@@ -335,7 +348,7 @@
             // characterEXPMAX
             // 
             this.characterEXPMAX.AutoSize = true;
-            this.characterEXPMAX.Location = new System.Drawing.Point(325, 99);
+            this.characterEXPMAX.Location = new System.Drawing.Point(327, 87);
             this.characterEXPMAX.Name = "characterEXPMAX";
             this.characterEXPMAX.Size = new System.Drawing.Size(13, 13);
             this.characterEXPMAX.TabIndex = 58;
@@ -344,7 +357,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(237, 99);
+            this.label12.Location = new System.Drawing.Point(239, 87);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(61, 13);
             this.label12.TabIndex = 59;
@@ -388,7 +401,7 @@
             // 
             // buttonDamageTest
             // 
-            this.buttonDamageTest.Location = new System.Drawing.Point(252, 165);
+            this.buttonDamageTest.Location = new System.Drawing.Point(227, 313);
             this.buttonDamageTest.Name = "buttonDamageTest";
             this.buttonDamageTest.Size = new System.Drawing.Size(75, 23);
             this.buttonDamageTest.TabIndex = 64;
@@ -398,7 +411,7 @@
             // 
             // buttonFullHeal
             // 
-            this.buttonFullHeal.Location = new System.Drawing.Point(252, 194);
+            this.buttonFullHeal.Location = new System.Drawing.Point(227, 342);
             this.buttonFullHeal.Name = "buttonFullHeal";
             this.buttonFullHeal.Size = new System.Drawing.Size(75, 23);
             this.buttonFullHeal.TabIndex = 65;
@@ -406,11 +419,87 @@
             this.buttonFullHeal.UseVisualStyleBackColor = true;
             this.buttonFullHeal.Click += new System.EventHandler(this.buttonFullHeal_Click);
             // 
+            // buttonResetSkills
+            // 
+            this.buttonResetSkills.Location = new System.Drawing.Point(244, 125);
+            this.buttonResetSkills.Name = "buttonResetSkills";
+            this.buttonResetSkills.Size = new System.Drawing.Size(44, 23);
+            this.buttonResetSkills.TabIndex = 72;
+            this.buttonResetSkills.Text = "Reset";
+            this.buttonResetSkills.UseVisualStyleBackColor = true;
+            this.buttonResetSkills.Visible = false;
+            // 
+            // buttonAddSTAM
+            // 
+            this.buttonAddSTAM.Location = new System.Drawing.Point(127, 208);
+            this.buttonAddSTAM.Name = "buttonAddSTAM";
+            this.buttonAddSTAM.Size = new System.Drawing.Size(26, 23);
+            this.buttonAddSTAM.TabIndex = 71;
+            this.buttonAddSTAM.Text = "+";
+            this.buttonAddSTAM.UseVisualStyleBackColor = true;
+            this.buttonAddSTAM.Visible = false;
+            // 
+            // buttonAddINTEL
+            // 
+            this.buttonAddINTEL.Location = new System.Drawing.Point(127, 183);
+            this.buttonAddINTEL.Name = "buttonAddINTEL";
+            this.buttonAddINTEL.Size = new System.Drawing.Size(26, 23);
+            this.buttonAddINTEL.TabIndex = 70;
+            this.buttonAddINTEL.Text = "+";
+            this.buttonAddINTEL.UseVisualStyleBackColor = true;
+            this.buttonAddINTEL.Visible = false;
+            // 
+            // buttonAddDEX
+            // 
+            this.buttonAddDEX.Location = new System.Drawing.Point(127, 157);
+            this.buttonAddDEX.Name = "buttonAddDEX";
+            this.buttonAddDEX.Size = new System.Drawing.Size(26, 23);
+            this.buttonAddDEX.TabIndex = 69;
+            this.buttonAddDEX.Text = "+";
+            this.buttonAddDEX.UseVisualStyleBackColor = true;
+            this.buttonAddDEX.Visible = false;
+            // 
+            // buttonAddSTR
+            // 
+            this.buttonAddSTR.Location = new System.Drawing.Point(127, 130);
+            this.buttonAddSTR.Name = "buttonAddSTR";
+            this.buttonAddSTR.Size = new System.Drawing.Size(26, 23);
+            this.buttonAddSTR.TabIndex = 68;
+            this.buttonAddSTR.Text = "+";
+            this.buttonAddSTR.UseVisualStyleBackColor = true;
+            this.buttonAddSTR.Visible = false;
+            // 
+            // characterTotalSP
+            // 
+            this.characterTotalSP.AutoSize = true;
+            this.characterTotalSP.Location = new System.Drawing.Point(327, 109);
+            this.characterTotalSP.Name = "characterTotalSP";
+            this.characterTotalSP.Size = new System.Drawing.Size(13, 13);
+            this.characterTotalSP.TabIndex = 67;
+            this.characterTotalSP.Text = "0";
+            // 
+            // labelSP
+            // 
+            this.labelSP.AutoSize = true;
+            this.labelSP.Location = new System.Drawing.Point(239, 109);
+            this.labelSP.Name = "labelSP";
+            this.labelSP.Size = new System.Drawing.Size(61, 13);
+            this.labelSP.TabIndex = 66;
+            this.labelSP.Text = "Skill Points:";
+            this.labelSP.Visible = false;
+            // 
             // mainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonResetSkills);
+            this.Controls.Add(this.buttonAddSTAM);
+            this.Controls.Add(this.buttonAddINTEL);
+            this.Controls.Add(this.buttonAddDEX);
+            this.Controls.Add(this.buttonAddSTR);
+            this.Controls.Add(this.characterTotalSP);
+            this.Controls.Add(this.labelSP);
             this.Controls.Add(this.buttonFullHeal);
             this.Controls.Add(this.buttonDamageTest);
             this.Controls.Add(this.label13);
@@ -439,7 +528,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CharacterLevel);
             this.Controls.Add(this.characterName);
@@ -473,7 +561,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label characterClass;
         public System.Windows.Forms.ProgressBar progressBarHealth;
@@ -496,5 +583,14 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button buttonDamageTest;
         private System.Windows.Forms.Button buttonFullHeal;
+        private System.Windows.Forms.ToolStripMenuItem shopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem towerToolStripMenuItem;
+        public System.Windows.Forms.Label characterTotalSP;
+        public System.Windows.Forms.Button buttonResetSkills;
+        public System.Windows.Forms.Button buttonAddSTAM;
+        public System.Windows.Forms.Button buttonAddINTEL;
+        public System.Windows.Forms.Button buttonAddDEX;
+        public System.Windows.Forms.Button buttonAddSTR;
+        public System.Windows.Forms.Label labelSP;
     }
 }

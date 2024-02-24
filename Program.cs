@@ -34,7 +34,7 @@ namespace TowerGame
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                string createTableQuery = "CREATE TABLE IF NOT EXISTS Characters (Name TEXT, ClassName TEXT, Level INTEGER, Health INTEGER, HealthMax INTEGER, Magic INTEGER, MagicMax INTEGER, Strength INTEGER, Dexterity INTEGER, Intellect INTEGER, Stamina INTEGER, CurrentEXP INTEGER, EXPMAX INTEGER)";
+                string createTableQuery = "CREATE TABLE IF NOT EXISTS Characters (Name TEXT, ClassName TEXT, Level INTEGER, Health INTEGER, HealthMax INTEGER, Magic INTEGER, MagicMax INTEGER, Strength INTEGER, Dexterity INTEGER, Intellect INTEGER, Stamina INTEGER, CurrentEXP INTEGER, EXPMAX INTEGER, SkillPoints INTEGER, playerCurrency INTEGER, inventorySlotCount INTEGER)";
                 SQLiteCommand createTableCommand = new SQLiteCommand(createTableQuery, connection);
                 createTableCommand.ExecuteNonQuery();
             }
@@ -67,8 +67,11 @@ namespace TowerGame
         public int Stamina { get; set; }
         public int playerExP { get; set; }
         public int playerExPMAX { get; set; }
+        public int SkillPoints {  get; set; }
+        public int playerCurrency {  get; set; }
+        public int inventorySlotCount {  get; set; }
 
-        public characterDataManagement(string playerName, string playerClass, int pLevel, int pStrength, int pDexterity, int pIntellect, int pStamina, int pHealth, int pHealthMax, int pMagic, int pMagicMax, int pExP, int pExPMAX)
+        public characterDataManagement(string playerName, string playerClass, int pLevel, int pStrength, int pDexterity, int pIntellect, int pStamina, int pHealth, int pHealthMax, int pMagic, int pMagicMax, int pExP, int pExPMAX, int skillpointTotal, int totalMoney, int inventorySlots)
         {
             Name = playerName;
             Level = pLevel;
@@ -83,6 +86,10 @@ namespace TowerGame
             Stamina = pStamina;
             playerExP = pExP;
             playerExPMAX = pExPMAX;
+            SkillPoints = skillpointTotal;
+            playerCurrency = totalMoney;
+            inventorySlotCount = inventorySlots;
+
         }
     }
     public class playerLevelUp
@@ -90,8 +97,9 @@ namespace TowerGame
         public static string connectionString { get; } = @"Data Source=characters.db;Version=3;";
         public void playerLevelUpData(characterDataManagement character)
         {
+
             Random random = new Random();
-            double experienceMultiplier = 10.75;
+            double experienceMultiplier = 9.75;
             double quadraticCoefficient = 1.5;
             int playerEXP = character.playerExP;
             int pLevel = character.Level;
@@ -105,7 +113,9 @@ namespace TowerGame
             int pHealthMax = character.HealthMax;
             int pMagic = character.Magic;
             int pMagicMax = character.MagicMax;
+            int pExP = character.playerExP;
             int pExPMAX = character.playerExPMAX;
+            int skillpointTotal = character.SkillPoints;
 
             int maxEXPnew = character.playerExPMAX + (int)(10 * (experienceMultiplier * Math.Pow(character.Level, 2)) + (quadraticCoefficient * character.Level));
             int maxHPnew = pHealthMax + ((pStamina + pStrength) * 2);
@@ -114,6 +124,7 @@ namespace TowerGame
             int DEXnew = random.Next(10);
             int INTELnew = random.Next(10);
             int STAMnew = random.Next(10);
+            int newSkillPoints = 5;
 
 
 
@@ -125,8 +136,7 @@ namespace TowerGame
             character.Intellect += INTELnew;
             character.HealthMax = maxHPnew;
             character.MagicMax = maxMPnew;
-
-            //Console.Write("Passed Level Up");
+            character.SkillPoints += newSkillPoints;
         }
     }
 }
